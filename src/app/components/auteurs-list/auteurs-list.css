@@ -1,0 +1,180 @@
+.loading {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+}
+
+.error-message {
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+}
+
+.no-data {
+  padding: 20px;
+  text-align: center;
+  color: #999;
+}
+
+.auteurs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.auteur-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.auteur-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.auteur-header {
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 15px;
+}
+
+.auteur-header h3 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.date-birth {
+  margin: 0;
+  color: #888;
+  font-size: 12px;
+}
+
+.auteur-livres {
+  margin-top: 15px;
+}
+
+.dropdown-btn {
+  width: 100%;
+  padding: 12px 15px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.dropdown-btn:hover {
+  background-color: #e8e8e8;
+  border-color: #999;
+}
+
+.dropdown-btn.open {
+  background-color: #007bff;
+  color: white;
+  border-color: #0056b3;
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.dropdown-btn.open .arrow {
+  transform: rotate(180deg);
+}
+
+.livres-list {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 6px;
+  max-height: 400px;
+  overflow-y: auto;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.livre-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: #f5f5f5;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.livre-item:hover {
+  background-color: #efefef;
+  transform: translateX(5px);
+}
+
+.livre-item:last-child {
+  margin-bottom: 0;
+}
+
+.livre-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.livre-details {
+  flex: 1;
+}
+
+.livre-titre {
+  margin: 0 0 5px 0;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.livre-date {
+  margin: 0 0 3px 0;
+  color: #666;
+  font-size: 12px;
+}
+
+.livre-langue {
+  margin: 0;
+  color: #999;
+  font-size: 11px;
+  font-style: italic;
+}
+
+.no-livres {
+  padding: 15px;
+  text-align: center;
+  color: #999;
+  background-color: #fafafa;
+  border-radius: 4px;
+  font-size: 13px;
+}
+

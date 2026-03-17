@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Categorie } from '../models/categorie';
 import { Article } from '../models/article';
 import { Livre } from '../models/livre';
+import { Auteur } from '../models/auteur';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,13 @@ export class ApiService {
 
   createArticle(article: any): Observable<Article> {
     return this.http.post<Article>(`${this.apiUrl}/articles`, article);
+  }
+
+  getAuteurs(): Observable<Auteur[]> {
+    return this.http.get<Auteur[]>(`${this.apiUrl}/auteurs`);
+  }
+
+  getAuteur(id: number): Observable<Auteur> {
+    return this.http.get<Auteur>(`${this.apiUrl}/auteurs/${id}`);
   }
 }
