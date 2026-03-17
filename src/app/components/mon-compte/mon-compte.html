@@ -1,0 +1,49 @@
+<section class="compte-wrapper">
+  <h1>Mon compte</h1>
+
+  <div *ngIf="loading()" class="loading">Chargement de votre profil...</div>
+
+  <div *ngIf="errorMessage()" class="error-message">{{ errorMessage() }}</div>
+
+  <article *ngIf="!loading() && adherent() as profile" class="profile-card">
+    <header class="profile-header">
+      <h2>{{ profile.prenom }} {{ profile.nom }}</h2>
+      <p class="email">{{ profile.email }}</p>
+    </header>
+
+    <div class="profile-grid">
+      <div class="field">
+        <span>Date de naissance</span>
+        <strong>{{ profile.dateNaiss | date: 'dd/MM/yyyy' }}</strong>
+      </div>
+      <div class="field">
+        <span>Date d'adhesion</span>
+        <strong>{{ profile.dateAdhesion | date: 'dd/MM/yyyy' }}</strong>
+      </div>
+      <div class="field">
+        <span>Telephone</span>
+        <strong>{{ profile.numTel || 'Non renseigne' }}</strong>
+      </div>
+      <div class="field">
+        <span>Adresse</span>
+        <strong>{{ profile.adressePostale || 'Non renseignee' }}</strong>
+      </div>
+    </div>
+
+    <section class="emprunts-section">
+      <h3>Mes livres loues</h3>
+      <p *ngIf="profile.emprunts.length === 0" class="empty">Aucun livre en cours.</p>
+
+      <div *ngIf="profile.emprunts.length > 0" class="emprunts-list">
+        <article *ngFor="let emprunt of profile.emprunts" class="emprunt-item">
+          <div class="icon" aria-hidden="true">📘</div>
+          <div class="content">
+            <h4>{{ emprunt.livre.titre }}</h4>
+            <p>Emprunte le {{ emprunt.dateEmprunt | date: 'dd/MM/yyyy' }}</p>
+            <p>Retour prevu le {{ emprunt.dateRetour | date: 'dd/MM/yyyy' }}</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </article>
+</section>

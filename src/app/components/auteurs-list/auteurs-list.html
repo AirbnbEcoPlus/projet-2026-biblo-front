@@ -27,7 +27,7 @@
           class="dropdown-btn"
           (click)="toggleAuteur(auteur.id)"
           [class.open]="expandedAuteurId() === auteur.id">
-          📚 {{ auteur.livres?.length || 0 }} livre(s)
+          📚 {{ auteur.livres.length || 0 }} livre(s)
           <span class="arrow">▼</span>
         </button>
 

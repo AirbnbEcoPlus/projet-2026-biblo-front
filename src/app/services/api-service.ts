@@ -5,6 +5,7 @@ import { Categorie } from '../models/categorie';
 import { Article } from '../models/article';
 import { Livre } from '../models/livre';
 import { Auteur } from '../models/auteur';
+import { Adherent } from '../models/adherent';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,9 @@ export class ApiService {
 
   getAuteur(id: number): Observable<Auteur> {
     return this.http.get<Auteur>(`${this.apiUrl}/auteurs/${id}`);
+  }
+
+  getAdherents(): Observable<Adherent[] | Adherent> {
+    return this.http.get<Adherent[] | Adherent>(`${this.apiUrl}/adherents`);
   }
 }
