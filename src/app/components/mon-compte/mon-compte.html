@@ -45,5 +45,20 @@
         </article>
       </div>
     </section>
+
+    <section class="emprunts-section">
+      <h3>Mes reservations</h3>
+      <p *ngIf="profile.reservations.length === 0" class="empty">Aucune reservation en cours.</p>
+
+      <div *ngIf="profile.reservations.length > 0" class="emprunts-list">
+        <article *ngFor="let reservation of profile.reservations" class="emprunt-item reservation-item">
+          <div class="icon" aria-hidden="true">🗓️</div>
+          <div class="content">
+            <h4>{{ reservation.livre.titre }}</h4>
+            <p>Reserve le {{ reservation.dateResa | date: 'dd/MM/yyyy' }}</p>
+          </div>
+        </article>
+      </div>
+    </section>
   </article>
 </section>

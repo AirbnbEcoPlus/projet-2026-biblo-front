@@ -10,6 +10,12 @@ export interface Emprunt {
   livre: LivreEmprunte;
 }
 
+export interface Reservation {
+  id: number;
+  dateResa: string;
+  livre: LivreEmprunte;
+}
+
 export interface Adherent {
   id: number;
   dateAdhesion: string;
@@ -21,5 +27,5 @@ export interface Adherent {
   numTel: string | null;
   photo: string | null;
   emprunts: Emprunt[];
-  reservations: unknown[];
+  reservations: Reservation[];
 }

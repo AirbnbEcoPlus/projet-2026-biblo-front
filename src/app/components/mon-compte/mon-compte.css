@@ -79,6 +79,11 @@ h1 {
   background: #f9fbff;
 }
 
+.reservation-item {
+  background: #f5fffa;
+  border-color: #d9f2e5;
+}
+
 .icon {
   font-size: 22px;
 }
