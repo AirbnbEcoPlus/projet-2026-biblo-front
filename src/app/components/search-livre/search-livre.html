@@ -1,1 +1,108 @@
-<p>search-livre works!</p>
+<div class="container mt-4">
+	<h2>Recherche de livres</h2>
+
+	<div class="card shadow-sm p-3 mb-3">
+		<div class="row g-2 align-items-center">
+			<div class="col-12 col-md-4">
+				<label class="form-label mb-1">Critere</label>
+				<select class="form-select" [(ngModel)]="selectedType" name="selectedType">
+					@for (option of criterionOptions; track option.type) {
+						<option [value]="option.type">{{ option.label }}</option>
+					}
+				</select>
+			</div>
+
+			<div class="col-12 col-md-6">
+				<label class="form-label mb-1">Valeur</label>
+				<input
+					class="form-control"
+					[type]="selectedOption.inputType"
+					[placeholder]="selectedOption.placeholder"
+					[(ngModel)]="criterionValue"
+					name="criterionValue"
+					(keyup.enter)="addCritere()"
+				>
+			</div>
+
+			<div class="col-12 col-md-2 d-grid mt-md-4">
+				<button class="btn btn-outline-primary" type="button" (click)="addCritere()">
+					Ajouter
+				</button>
+			</div>
+		</div>
+
+		<div class="mt-3" [class.d-none]="criteres().length === 0">
+			<label class="form-label mb-2">Criteres actifs</label>
+			<div class="d-flex flex-wrap gap-2">
+				@for (critere of criteres(); track critere.type) {
+					<span class="badge text-bg-secondary critere-chip">
+						{{ critere.type }}: {{ critere.value }}
+						<button
+							type="button"
+							class="btn btn-sm btn-link text-white p-0 ms-2"
+							(click)="removeCritere(critere.type)"
+						>
+							x
+						</button>
+					</span>
+				}
+			</div>
+		</div>
+
+		<div class="d-flex gap-2 mt-3">
+			<button class="btn btn-primary" type="button" (click)="search()" [disabled]="loading()">
+				Rechercher
+			</button>
+			<button class="btn btn-outline-secondary" type="button" (click)="clearAll()" [disabled]="loading()">
+				Reinitialiser
+			</button>
+		</div>
+
+		@if (errorMessage()) {
+			<div class="alert alert-danger mt-3 mb-0">{{ errorMessage() }}</div>
+		}
+	</div>
+
+	<div class="card shadow-sm p-3">
+		<h3 class="h5 mb-3">Resultats</h3>
+
+		@if (loading()) {
+			<p class="mb-0">Chargement...</p>
+		} @else if (livres().length === 0) {
+			<p class="mb-0">Aucun livre trouve.</p>
+		} @else {
+			<div class="table-responsive">
+				<table class="table table-striped align-middle mb-0">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Titre</th>
+							<th>Date de sortie</th>
+							<th>Langue</th>
+							<th>Categories</th>
+						</tr>
+					</thead>
+					<tbody>
+						@for (livre of livres(); track livre.id) {
+							<tr>
+								<td>{{ livre.id }}</td>
+								<td>{{ livre.titre }}</td>
+								<td>{{ livre.dateSortie | date:'dd/MM/yyyy' }}</td>
+								<td>{{ livre.langue || '-' }}</td>
+								<td>
+									@if (livre.categories?.length) {
+										@for (cat of livre.categories; track cat.id) {
+											<span class="badge text-bg-light border me-1">{{ cat.nom || cat.libelle }}</span>
+										}
+									} @else {
+										-
+									}
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		}
+	</div>
+</div>
