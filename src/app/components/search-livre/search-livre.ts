@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api-service';
 import { Livre } from '../../models/livre';
 
-type SearchType = 'titre' | 'dateDebut' | 'dateFin' | 'langue' | 'categorie';
+type SearchType = 'titre' | 'dateDebut' | 'dateFin' | 'langue' | 'categorie' | 'auteur';
 
 interface ActiveCriterion {
   type: SearchType;
@@ -15,7 +15,7 @@ interface CriterionOption {
   type: SearchType;
   label: string;
   placeholder: string;
-  inputType: 'text' | 'date' | 'number';
+  inputType: 'text' | 'date';
 }
 
 @Component({
@@ -32,7 +32,8 @@ export class SearchLivre {
     { type: 'dateDebut', label: 'Date debut', placeholder: '', inputType: 'date' },
     { type: 'dateFin', label: 'Date fin', placeholder: '', inputType: 'date' },
     { type: 'langue', label: 'Langue', placeholder: 'Ex: FR', inputType: 'text' },
-    { type: 'categorie', label: 'Categorie (ID)', placeholder: 'Ex: 1', inputType: 'number' }
+    { type: 'categorie', label: 'Categorie', placeholder: 'Ex: Roman', inputType: 'text' },
+    { type: 'auteur', label: 'Auteur', placeholder: 'Ex: FAURE', inputType: 'text' },
   ];
 
   selectedType: SearchType = 'titre';
@@ -45,6 +46,10 @@ export class SearchLivre {
 
   get selectedOption(): CriterionOption {
     return this.criterionOptions.find(option => option.type === this.selectedType) ?? this.criterionOptions[0];
+  }
+
+  getLabelForType(type: SearchType): string {
+    return this.criterionOptions.find((option) => option.type === type)?.label ?? type;
   }
 
   addCritere() {
@@ -83,11 +88,14 @@ export class SearchLivre {
         case 'categorie':
           params['categorie'] = critere.value;
           break;
+        case 'auteur':
+          params['auteur'] = critere.value;
+          break;
         case 'dateDebut':
-          params['dateDebut'] = critere.value;
+          params['debut'] = critere.value;
           break;
         case 'dateFin':
-          params['dateFin'] = critere.value;
+          params['fin'] = critere.value;
           break;
       }
     }

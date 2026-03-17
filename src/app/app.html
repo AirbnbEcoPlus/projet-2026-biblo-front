@@ -1,14 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
-    <a class="navbar-brand" routerLink="/">POC Articles</a>
+    <a class="navbar-brand" routerLink="/">LibraryMan</a>
     <div class="navbar-nav me-auto">
-      <a class="nav-link" routerLink="/categories" routerLinkActive="active">Catégories</a>
       <a class="nav-link" routerLink="/auteurs" routerLinkActive="active">Auteurs</a>
+      <a class="nav-link" routerLink="/search-livres" routerLinkActive="active">Recherche de livres</a>
       @if (authService.isLoggedIn()) {
         <a class="nav-link" routerLink="/mon-compte" routerLinkActive="active">Mon compte</a>
-      }
-      @if (authService.isLoggedIn() && authService.isAdmin()) {
-        <a class="nav-link" routerLink="/add-article" routerLinkActive="active">Ajouter</a>
       }
     </div>
     <div class="navbar-nav">

@@ -36,7 +36,7 @@
 			<div class="d-flex flex-wrap gap-2">
 				@for (critere of criteres(); track critere.type) {
 					<span class="badge text-bg-secondary critere-chip">
-						{{ critere.type }}: {{ critere.value }}
+						{{ getLabelForType(critere.type) }}: {{ critere.value }}
 						<button
 							type="button"
 							class="btn btn-sm btn-link text-white p-0 ms-2"
