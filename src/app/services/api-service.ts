@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Categorie } from '../models/categorie';
 import { Article } from '../models/article';
 import { Livre } from '../models/livre';
@@ -14,6 +14,7 @@ import { Adherent } from '../models/adherent';
 export class ApiService {
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
+  private apiOrigin = this.resolveApiOrigin();
 
   getCategories(): Observable<Categorie[]> {
     return this.http.get<Categorie[]>(`${this.apiUrl}/categories`);
@@ -32,11 +33,15 @@ export class ApiService {
   }
 
   getLivres(criteres?: Record<string, string>): Observable<Livre[]> {
-    return this.http.get<any>(`${this.apiUrl}/livres`, { params: criteres });
+    return this.http
+      .get<Livre[]>(`${this.apiUrl}/livres`, { params: criteres })
+      .pipe(map((livres) => livres.map((livre) => this.normalizeLivre(livre))));
   }
 
   getLivreById(id: string | number): Observable<Livre> {
-    return this.http.get<Livre>(`${this.apiUrl}/livres/${id}`);
+    return this.http
+      .get<Livre>(`${this.apiUrl}/livres/${id}`)
+      .pipe(map((livre) => this.normalizeLivre(livre)));
   }
 
   createArticle(article: any): Observable<Article> {
@@ -52,7 +57,9 @@ export class ApiService {
   }
 
   getAdherents(): Observable<Adherent[] | Adherent> {
-    return this.http.get<Adherent[] | Adherent>(`${this.apiUrl}/adherents`);
+    return this.http
+      .get<Adherent[] | Adherent>(`${this.apiUrl}/adherents`)
+      .pipe(map((payload) => this.normalizeAdherentPayload(payload)));
   }
 
   createReservation(livreId: number): Observable<unknown> {
@@ -64,6 +71,78 @@ export class ApiService {
   }
 
   updateMyAdherentProfile(payload: { email: string; numTel: string; password?: string }): Observable<Adherent> {
-    return this.http.patch<Adherent>(`${this.apiUrl}/adherents`, payload);
+    return this.http
+      .patch<Adherent>(`${this.apiUrl}/adherents`, payload)
+      .pipe(map((adherent) => this.normalizeAdherent(adherent)));
+  }
+
+  private resolveApiOrigin(): string {
+    try {
+      return new URL(this.apiUrl).origin;
+    } catch {
+      return '';
+    }
+  }
+
+  private normalizePhotoUrl(photoUrl?: string | null): string | null | undefined {
+    if (!photoUrl) {
+      return photoUrl;
+    }
+
+    const trimmedUrl = photoUrl.trim();
+
+    if (
+      trimmedUrl.startsWith('http://') ||
+      trimmedUrl.startsWith('https://') ||
+      trimmedUrl.startsWith('data:') ||
+      trimmedUrl.startsWith('blob:')
+    ) {
+      return trimmedUrl;
+    }
+
+    if (!this.apiOrigin) {
+      return trimmedUrl;
+    }
+
+    if (trimmedUrl.startsWith('/')) {
+      return `${this.apiOrigin}${trimmedUrl}`;
+    }
+
+    return `${this.apiOrigin}/${trimmedUrl}`;
+  }
+
+  private normalizeLivre(livre: Livre): Livre {
+    return {
+      ...livre,
+      photoCouverture: this.normalizePhotoUrl(livre.photoCouverture) || null,
+    };
+  }
+
+  private normalizeAdherent(adherent: Adherent): Adherent {
+    return {
+      ...adherent,
+      emprunts: (adherent.emprunts || []).map((emprunt) => ({
+        ...emprunt,
+        livre: {
+          ...emprunt.livre,
+          photoCouverture: this.normalizePhotoUrl(emprunt.livre?.photoCouverture) || null,
+        },
+      })),
+      reservations: (adherent.reservations || []).map((reservation) => ({
+        ...reservation,
+        livre: {
+          ...reservation.livre,
+          photoCouverture: this.normalizePhotoUrl(reservation.livre?.photoCouverture) || null,
+        },
+      })),
+    };
+  }
+
+  private normalizeAdherentPayload(payload: Adherent[] | Adherent): Adherent[] | Adherent {
+    if (Array.isArray(payload)) {
+      return payload.map((adherent) => this.normalizeAdherent(adherent));
+    }
+
+    return this.normalizeAdherent(payload);
   }
 }
