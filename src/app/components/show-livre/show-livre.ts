@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api-service';
 import { Livre } from '../../models/livre';
 import { CommonModule, DatePipe, Location } from '@angular/common';
@@ -7,7 +7,7 @@ import { CommonModule, DatePipe, Location } from '@angular/common';
 @Component({
   selector: 'app-show-livre',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterLink],
+  imports: [CommonModule, DatePipe],
   templateUrl: './show-livre.html'
 })
 export class ShowLivre implements OnInit {
