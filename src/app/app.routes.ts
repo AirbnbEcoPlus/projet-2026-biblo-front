@@ -6,11 +6,13 @@ import { AutheursList } from './components/auteurs-list/auteurs-list';
 import { MonCompte } from './components/mon-compte/mon-compte';
 import { authGuard } from './guards/auth-guard';
 import { LivreList } from './components/livres-list/livres-list';
+import { ShowLivre } from './components/show-livre/show-livre';
 
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'livres-list', component: LivreList},
   { path: 'search-livres', component: SearchLivre },
+  { path: 'livres/:id', component: ShowLivre },
   { path: 'auteurs', component: AutheursList },
   { path: 'mon-compte', component: MonCompte, canActivate: [authGuard] },
   { path: 'login', component: Login },

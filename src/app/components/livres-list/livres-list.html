@@ -19,7 +19,11 @@
 					<tbody>
 						@for (livre of livres(); track livre.id) {
 							<tr>
-								<td>{{ livre.titre }}</td>
+								<td>
+									<a [routerLink]="['/livres', livre.id]" class="fw-bold text-decoration-none">
+										{{ livre.titre }}
+									</a>
+								</td>
 								<td>{{ livre.dateSortie | date:'dd/MM/yyyy' }}</td>
 								<td>{{ livre.langue || '-' }}</td>
 								<td>

@@ -1,0 +1,27 @@
+<div class="container mt-5">
+  <button (click)="back()" class="btn btn-outline-secondary mb-4">
+    &larr; Retour
+  </button>
+
+  @if (loading()) {
+    <div class="text-center">Chargement du livre...</div>
+  } @else if (livre(); as l) {
+    <div class="row">
+      <div class="col-md-4">
+        <img [src]="l.photoCouverture" class="img-fluid rounded shadow" [alt]="l.titre">
+      </div>
+      <div class="col-md-8">
+        <h1 class="display-4">{{ l.titre }}</h1>
+        <p class="lead text-muted">Par {{ l.auteurs || 'Auteur inconnu' }}</p>
+        <hr>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Langue :</strong> {{ l.langue | uppercase }}</li>
+          <li class="list-group-item"><strong>Date de sortie :</strong> {{ l.dateSortie | date:'dd/MM/yyyy' }}</li>
+          <li class="list-group-item"><strong>Catégories :</strong> {{ l.categories }}</li>
+        </ul>
+      </div>
+    </div>
+  } @else {
+    <div class="alert alert-warning">Livre introuvable.</div>
+  }
+</div>
