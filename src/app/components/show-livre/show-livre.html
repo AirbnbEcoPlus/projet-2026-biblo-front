@@ -1,27 +1,70 @@
-<div class="container mt-5">
-  <button (click)="back()" class="btn btn-outline-secondary mb-4">
-    &larr; Retour
-  </button>
+<div class="book-page container py-4 py-md-5">
+  <div class="top-actions mb-4 mb-md-5">
+    <button (click)="back()" class="btn btn-outline-secondary btn-sm">
+      &larr; Retour
+    </button>
+  </div>
 
   @if (loading()) {
-    <div class="text-center">Chargement du livre...</div>
+    <div class="state-box text-center">Chargement du livre...</div>
   } @else if (livre(); as l) {
-    <div class="row">
-      <div class="col-md-4">
-        <img [src]="l.photoCouverture" class="img-fluid rounded shadow" [alt]="l.titre">
+    <article class="book-card row g-4 g-lg-5 align-items-start">
+      <div class="col-12 col-md-4 col-lg-3">
+        <div class="cover-frame">
+          <img [src]="l.photoCouverture" class="img-fluid rounded-3" [alt]="l.titre">
+        </div>
       </div>
-      <div class="col-md-8">
-        <h1 class="display-4">{{ l.titre }}</h1>
-        <p class="lead text-muted">Par {{ formatAuteurs(l.auteurs) }}</p>
-        <hr>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item"><strong>Langue :</strong> {{ l.langue | uppercase }}</li>
-          <li class="list-group-item"><strong>Date de sortie :</strong> {{ l.dateSortie | date:'dd/MM/yyyy' }}</li>
-          <li class="list-group-item"><strong>Catégories :</strong> {{ formatCategories(l.categories) }}</li>
-        </ul>
+
+      <div class="col-12 col-md-8 col-lg-9">
+        <header class="mb-4">
+          <p class="book-eyebrow mb-2">Fiche livre</p>
+          <h1 class="book-title mb-2">{{ l.titre }}</h1>
+          <p class="book-authors mb-0">Par {{ formatAuteurs(l.auteurs) }}</p>
+        </header>
+
+        <section class="book-meta mb-4" aria-label="Informations du livre">
+          <p><span>Langue</span><strong>{{ l.langue ? (l.langue | uppercase) : 'Non renseignée' }}</strong></p>
+          <p><span>Date de sortie</span><strong>{{ l.dateSortie | date:'dd/MM/yyyy' }}</strong></p>
+          <p><span>Catégories</span><strong>{{ formatCategories(l.categories) }}</strong></p>
+        </section>
+
+        <section class="book-description" aria-label="Description du livre">
+          <h2>Synopsis</h2>
+          <p>{{ l.description || 'Aucune description disponible pour ce livre.' }}</p>
+        </section>
+
+        <section class="reservation-panel mt-4" aria-label="Disponibilite et reservation">
+          <p class="reservation-state mb-1">
+            <span>Statut :</span>
+            <strong>{{ getReservationStateLabel(l) }}</strong>
+          </p>
+
+          @if (l.emprunte) {
+            <p class="availability-hint mb-3">
+              Disponible a partir du
+              <strong>
+                {{ l.dateRetourPrevueEmprunt ? (l.dateRetourPrevueEmprunt | date:'dd/MM/yyyy') : 'date non renseignee' }}
+              </strong>
+            </p>
+          }
+
+          @if (authService.isLoggedIn()) {
+            <button class="btn btn-primary reserve-btn" [disabled]="!canReserve(l)" (click)="reserveBook(l)">
+              {{ reserving() ? 'Reservation en cours...' : (canReserve(l) ? 'Reserver ce livre' : 'Reservation indisponible') }}
+            </button>
+
+            @if (reservationMessage()) {
+              <p class="reservation-feedback success mt-2 mb-0">{{ reservationMessage() }}</p>
+            }
+
+            @if (reservationError()) {
+              <p class="reservation-feedback error mt-2 mb-0">{{ reservationError() }}</p>
+            }
+          }
+        </section>
       </div>
-    </div>
+    </article>
   } @else {
-    <div class="alert alert-warning">Livre introuvable.</div>
+    <div class="alert alert-warning mb-0">Livre introuvable.</div>
   }
 </div>

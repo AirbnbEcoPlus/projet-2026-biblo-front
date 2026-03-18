@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Categorie } from '../models/categorie';
 import { Article } from '../models/article';
 import { Livre } from '../models/livre';
@@ -53,5 +53,9 @@ export class ApiService {
 
   getAdherents(): Observable<Adherent[] | Adherent> {
     return this.http.get<Adherent[] | Adherent>(`${this.apiUrl}/adherents`);
+  }
+
+  createReservation(livreId: number): Observable<unknown> {
+    return this.http.post(`${this.apiUrl}/reservations`, { livre: livreId });
   }
 }
