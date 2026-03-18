@@ -36,7 +36,16 @@
 
       <div *ngIf="profile.emprunts.length > 0" class="emprunts-list">
         <article *ngFor="let emprunt of profile.emprunts" class="emprunt-item">
-          <div class="icon" aria-hidden="true">📘</div>
+          @if (emprunt.livre.photoCouverture) {
+            <img
+              class="book-thumb"
+              [src]="emprunt.livre.photoCouverture"
+              [alt]="'Couverture de ' + emprunt.livre.titre"
+              loading="lazy"
+            >
+          } @else {
+            <div class="book-thumb-placeholder" aria-hidden="true">Image indisponible</div>
+          }
           <div class="content">
             <h4>{{ emprunt.livre.titre }}</h4>
             <p>Emprunte le {{ emprunt.dateEmprunt | date: 'dd/MM/yyyy' }}</p>
@@ -52,7 +61,16 @@
 
       <div *ngIf="profile.reservations.length > 0" class="emprunts-list">
         <article *ngFor="let reservation of profile.reservations" class="emprunt-item reservation-item">
-          <div class="icon" aria-hidden="true">🗓️</div>
+          @if (reservation.livre.photoCouverture) {
+            <img
+              class="book-thumb"
+              [src]="reservation.livre.photoCouverture"
+              [alt]="'Couverture de ' + reservation.livre.titre"
+              loading="lazy"
+            >
+          } @else {
+            <div class="book-thumb-placeholder" aria-hidden="true">Image indisponible</div>
+          }
           <div class="content reservation-content">
             <div>
               <h4>{{ reservation.livre.titre }}</h4>

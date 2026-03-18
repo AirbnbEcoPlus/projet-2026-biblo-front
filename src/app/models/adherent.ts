@@ -1,6 +1,7 @@
 export interface LivreEmprunte {
   id: number;
   titre: string;
+  photoCouverture?: string | null;
 }
 
 export interface Emprunt {

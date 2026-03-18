@@ -84,8 +84,31 @@ h1 {
   border-color: #d9f2e5;
 }
 
-.icon {
-  font-size: 22px;
+.book-thumb {
+  width: 56px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #dbe5f1;
+  background: #eef3fb;
+  flex-shrink: 0;
+}
+
+.book-thumb-placeholder {
+  width: 56px;
+  height: 80px;
+  border-radius: 8px;
+  border: 1px dashed #c8d5e8;
+  background: #f3f7ff;
+  color: #6d7f96;
+  font-size: 10px;
+  line-height: 1.2;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  flex-shrink: 0;
 }
 
 .content h4 {
