@@ -4,11 +4,26 @@
   <div *ngIf="loading()" class="loading">Chargement de votre profil...</div>
 
   <div *ngIf="errorMessage()" class="error-message">{{ errorMessage() }}</div>
+  <div *ngIf="successMessage()" class="success-message">{{ successMessage() }}</div>
 
   <article *ngIf="!loading() && adherent() as profile" class="profile-card">
     <header class="profile-header">
-      <h2>{{ profile.prenom }} {{ profile.nom }}</h2>
-      <p class="email">{{ profile.email }}</p>
+      <div>
+        <h2>{{ profile.prenom }} {{ profile.nom }}</h2>
+        <p class="email">{{ profile.email }}</p>
+      </div>
+
+      <button
+        type="button"
+        class="edit-profile-btn"
+        (click)="openEditModal(profile)"
+        aria-label="Modifier mes informations"
+        title="Modifier mes informations"
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+          <path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75L3 17.25zm2.92 2.33H5v-.92l8.06-8.06.92.92L5.92 19.58zM20.71 7.04a1 1 0 000-1.41L18.37 3.29a1 1 0 00-1.41 0l-1.58 1.58 3.75 3.75 1.58-1.58z"></path>
+        </svg>
+      </button>
     </header>
 
     <div class="profile-grid">
@@ -94,4 +109,48 @@
       </div>
     </section>
   </article>
+
+  @if (editModalOpen()) {
+    <div class="modal-backdrop-custom" (click)="closeEditModal()">
+      <section class="profile-modal" (click)="$event.stopPropagation()" aria-label="Modifier mes informations">
+        <header class="modal-header-custom">
+          <h3>Modifier mes informations</h3>
+          <button type="button" class="close-modal-btn" (click)="closeEditModal()" [disabled]="savingProfile()">×</button>
+        </header>
+
+        <form class="profile-form" (ngSubmit)="saveProfileUpdates()">
+          <label>
+            Email
+            <input type="email" name="email" [(ngModel)]="formEmail" required autocomplete="email">
+          </label>
+
+          <label>
+            Telephone
+            <input type="text" name="numTel" [(ngModel)]="formNumTel" autocomplete="tel">
+          </label>
+
+          <label>
+            Nouveau mot de passe
+            <input type="password" name="password" [(ngModel)]="formPassword" autocomplete="new-password" placeholder="Laisser vide pour ne pas changer">
+          </label>
+
+          <label>
+            Confirmation du mot de passe
+            <input type="password" name="passwordConfirm" [(ngModel)]="formPasswordConfirm" autocomplete="new-password" placeholder="Confirmer le mot de passe">
+          </label>
+
+          @if (formError()) {
+            <p class="form-error mb-0">{{ formError() }}</p>
+          }
+
+          <div class="modal-actions">
+            <button type="button" class="btn btn-outline-secondary" (click)="closeEditModal()" [disabled]="savingProfile()">Annuler</button>
+            <button type="submit" class="btn btn-primary" [disabled]="savingProfile()">
+              {{ savingProfile() ? 'Enregistrement...' : 'Enregistrer' }}
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  }
 </section>

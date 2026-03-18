@@ -20,6 +20,14 @@ h1 {
   color: #8a1f1f;
 }
 
+.success-message {
+  padding: 12px;
+  border-radius: 8px;
+  background: #e8f9ef;
+  color: #145734;
+  margin-top: 8px;
+}
+
 .profile-card {
   border: 1px solid #e1e5ea;
   border-radius: 14px;
@@ -31,9 +39,121 @@ h1 {
   margin: 0;
 }
 
+.profile-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .profile-header .email {
   margin: 6px 0 0;
   color: #5f6b7a;
+}
+
+.edit-profile-btn {
+  border: 1px solid #d2deed;
+  background: #f4f8fe;
+  color: #1f4566;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.edit-profile-btn svg {
+  fill: currentColor;
+}
+
+.edit-profile-btn:hover {
+  background: #eaf2fd;
+  transform: translateY(-1px);
+}
+
+.modal-backdrop-custom {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 23, 34, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 1200;
+}
+
+.profile-modal {
+  width: min(520px, 100%);
+  background: #ffffff;
+  border: 1px solid #dbe5f1;
+  border-radius: 14px;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+}
+
+.modal-header-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.modal-header-custom h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.close-modal-btn {
+  border: 1px solid #d0dae7;
+  background: #f7fafe;
+  color: #2f4f6d;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.profile-form {
+  display: grid;
+  gap: 12px;
+}
+
+.profile-form label {
+  display: grid;
+  gap: 6px;
+  color: #2b3e51;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.profile-form input {
+  border: 1px solid #d3deec;
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.95rem;
+}
+
+.profile-form input:focus {
+  outline: 2px solid #99c8ff;
+  border-color: #79b6f8;
+}
+
+.form-error {
+  color: #8a1f1f;
+  background: #ffecef;
+  border: 1px solid #f8c8cf;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 .profile-grid {
@@ -165,5 +285,9 @@ h1 {
 @media (max-width: 700px) {
   .profile-grid {
     grid-template-columns: 1fr;
+  }
+
+  .profile-header {
+    align-items: center;
   }
 }

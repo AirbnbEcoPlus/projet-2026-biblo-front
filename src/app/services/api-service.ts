@@ -62,4 +62,8 @@ export class ApiService {
   deleteReservation(reservationId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/reservations/${reservationId}`);
   }
+
+  updateMyAdherentProfile(payload: { email: string; numTel: string; password?: string }): Observable<Adherent> {
+    return this.http.patch<Adherent>(`${this.apiUrl}/adherents`, payload);
+  }
 }
