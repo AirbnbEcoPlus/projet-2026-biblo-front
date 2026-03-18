@@ -1,26 +1,47 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container">
-    <a class="navbar-brand" routerLink="/">LibraryMan</a>
-    <div class="navbar-nav me-auto">
-      <a class="nav-link" routerLink="/livres-list" routerLinkActive="active">Livres</a>
-      <a class="nav-link" routerLink="/auteurs" routerLinkActive="active">Auteurs</a>
-      <a class="nav-link" routerLink="/search-livres" routerLinkActive="active">Recherche de livres</a>
-      @if (authService.isLoggedIn()) {
-        <a class="nav-link" routerLink="/mon-compte" routerLinkActive="active">Mon compte</a>
-      }
-    </div>
-    <div class="navbar-nav">
-      @if (authService.isLoggedIn()) {
-        <span class="nav-link text-light">{{ authService.userEmail() }}</span>
-        @if (authService.isAdmin()) {
-          <span class="badge bg-warning text-dark me-2 align-self-center">Admin</span>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary app-navbar">
+  <div class="container py-1">
+    <a class="navbar-brand brand" routerLink="/" (click)="closeMobileMenu()">
+      <span class="brand-badge" aria-hidden="true">LM</span>
+      <span>LibraryMan</span>
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      aria-label="Basculer la navigation"
+      [attr.aria-expanded]="mobileMenuOpen()"
+      (click)="toggleMobileMenu()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" [class.show]="mobileMenuOpen()">
+      <div class="navbar-nav me-auto nav-primary">
+        <a class="nav-link" routerLink="/livres-list" routerLinkActive="active" (click)="closeMobileMenu()">Livres</a>
+        <a class="nav-link" routerLink="/auteurs" routerLinkActive="active" (click)="closeMobileMenu()">Auteurs</a>
+        <a class="nav-link" routerLink="/search-livres" routerLinkActive="active" (click)="closeMobileMenu()">Recherche</a>
+        @if (authService.isLoggedIn()) {
+          <a class="nav-link" routerLink="/mon-compte" routerLinkActive="active" (click)="closeMobileMenu()">Mon compte</a>
         }
-        <a class="nav-link" style="cursor:pointer" (click)="authService.logout()">Déconnexion</a>
-      } @else {
-        <a class="nav-link" routerLink="/login" routerLinkActive="active">Connexion</a>
-      }
+      </div>
+
+      <div class="navbar-nav nav-secondary">
+        @if (authService.isLoggedIn()) {
+          <div class="nav-item user-chip">
+            <span class="user-email" [title]="authService.userEmail()">{{ authService.userEmail() }}</span>
+            @if (authService.isAdmin()) {
+              <span class="badge rounded-pill text-bg-warning">Admin</span>
+            }
+          </div>
+          <button type="button" class="btn btn-sm btn-light logout-btn" (click)="logout()">Deconnexion</button>
+        } @else {
+          <a class="btn btn-sm btn-light login-btn" routerLink="/login" routerLinkActive="active" (click)="closeMobileMenu()">Connexion</a>
+        }
+      </div>
     </div>
   </div>
 </nav>
 
-<router-outlet />
+<main class="app-main">
+  <router-outlet />
+</main>

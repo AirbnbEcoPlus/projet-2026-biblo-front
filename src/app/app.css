@@ -1,0 +1,109 @@
+.app-navbar {
+	position: sticky;
+	top: 0;
+	z-index: 1030;
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+}
+
+.brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55rem;
+	font-weight: 700;
+	letter-spacing: 0.01em;
+}
+
+.brand-badge {
+	width: 2rem;
+	height: 2rem;
+	border-radius: 0.6rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	font-size: 0.76rem;
+	font-weight: 800;
+	background: linear-gradient(145deg, #1f9bcf, #1777a3);
+	border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.nav-primary {
+	gap: 0.25rem;
+}
+
+.nav-primary .nav-link {
+	border-radius: 0.55rem;
+	padding: 0.42rem 0.75rem;
+	color: rgba(255, 255, 255, 0.92);
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-primary .nav-link:hover {
+	background: rgba(255, 255, 255, 0.14);
+	color: #fff;
+}
+
+.nav-primary .nav-link.active {
+	background: rgba(255, 255, 255, 0.22);
+	color: #fff;
+	font-weight: 700;
+}
+
+.nav-secondary {
+	display: flex;
+	align-items: center;
+	gap: 0.7rem;
+}
+
+.user-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	background: rgba(0, 0, 0, 0.15);
+	color: #fff;
+	border-radius: 999px;
+	padding: 0.25rem 0.65rem;
+	max-width: 300px;
+}
+
+.user-email {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 0.9rem;
+}
+
+.login-btn,
+.logout-btn {
+	border-radius: 999px;
+	min-width: 105px;
+	font-weight: 600;
+}
+
+.app-main {
+	min-height: calc(100vh - 72px);
+}
+
+@media (max-width: 991.98px) {
+	.navbar-collapse {
+		margin-top: 0.7rem;
+		border-radius: 0.9rem;
+		background: rgba(12, 42, 62, 0.35);
+		padding: 0.6rem;
+	}
+
+	.nav-secondary {
+		margin-top: 0.6rem;
+		align-items: stretch;
+	}
+
+	.user-chip {
+		max-width: 100%;
+		justify-content: center;
+	}
+
+	.login-btn,
+	.logout-btn {
+		width: 100%;
+	}
+}
