@@ -2,9 +2,9 @@
   <div class="container">
     <a class="navbar-brand" routerLink="/">LibraryMan</a>
     <div class="navbar-nav me-auto">
+      <a class="nav-link" routerLink="/livres-list" routerLinkActive="active">Livres</a>
       <a class="nav-link" routerLink="/auteurs" routerLinkActive="active">Auteurs</a>
       <a class="nav-link" routerLink="/search-livres" routerLinkActive="active">Recherche de livres</a>
-      <a class="nav-link" routerLink="/livres-list" routerLinkActive="active">Voir les livres</a>
       @if (authService.isLoggedIn()) {
         <a class="nav-link" routerLink="/mon-compte" routerLinkActive="active">Mon compte</a>
       }
