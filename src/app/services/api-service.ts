@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { map, Observable } from 'rxjs';
 import { Categorie } from '../models/categorie';
 import { Article } from '../models/article';
 import { Livre } from '../models/livre';
@@ -12,7 +13,7 @@ import { Adherent } from '../models/adherent';
 })
 export class ApiService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://127.0.0.1:8000/api';
+  private apiUrl = environment.apiUrl;
 
   getCategories(): Observable<Categorie[]> {
     return this.http.get<Categorie[]>(`${this.apiUrl}/categories`);
@@ -31,7 +32,7 @@ export class ApiService {
   }
 
   getLivres(criteres?: Record<string, string>): Observable<Livre[]> {
-    return this.http.get<Livre[]>(`${this.apiUrl}/livres`, { params: criteres });
+    return this.http.get<any>(`${this.apiUrl}/livres`, { params: criteres });
   }
 
   createArticle(article: any): Observable<Article> {

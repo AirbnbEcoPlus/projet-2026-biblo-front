@@ -1,0 +1,63 @@
+<div class="container mt-4">
+
+	<div class="card shadow-sm p-3">
+		<h2>Liste des livres</h2>
+
+		@if (loading()) {
+			<p class="mb-0">Chargement...</p>
+		} @else if (livres() && livres().length > 0) {
+			<div class="table-responsive">
+				<table class="table table-striped align-middle mb-0">
+					<thead>
+						<tr>
+							<th>Titre</th>
+							<th>Date de sortie</th>
+							<th>Langue</th>
+							<th>Catégories</th>
+						</tr>
+					</thead>
+					<tbody>
+						@for (livre of livres(); track livre.id) {
+							<tr>
+								<td>{{ livre.titre }}</td>
+								<td>{{ livre.dateSortie | date:'dd/MM/yyyy' }}</td>
+								<td>{{ livre.langue || '-' }}</td>
+								<td>
+									@if (livre.categories?.length) {
+										@for (cat of livre.categories; track cat.id) {
+											<span class="badge text-bg-light border me-1">{{ cat.nom || cat.libelle }}</span>
+										}
+									} @else {
+										-
+									}
+								</td>
+							</tr>
+						}	
+					</tbody>
+				</table>
+			</div>
+            <div class="d-flex justify-content-between align-items-center mt-3 p-2 bg-light border-top">
+                <button 
+                    class="btn btn-outline-primary btn-sm" 
+                    [disabled]="currentPage() === 1 || loading()"
+                    (click)="changePage(currentPage() - 1)">
+                    &laquo; Précédent
+                </button>
+        
+                <span class="text-muted">
+                    Page <strong>{{ currentPage() }}</strong> 
+                    <small>(Total : {{ totalItems() }} livres)</small>
+                </span>
+        
+                <button 
+                    class="btn btn-outline-primary btn-sm" 
+                    [disabled]="livres().length < 10 || loading()" 
+                    (click)="changePage(currentPage() + 1)">
+                    Suivant &raquo;
+                </button>
+            </div>
+		} @else {
+			<p class="mb-0">Aucun livre trouvé.</p>
+		}
+	</div>
+</div>
