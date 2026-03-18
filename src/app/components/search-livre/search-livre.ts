@@ -3,6 +3,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api-service';
 import { Livre } from '../../models/livre';
+import { RouterLink } from '@angular/router';
 
 type SearchType = 'titre' | 'dateDebut' | 'dateFin' | 'langue' | 'categorie' | 'auteur';
 
@@ -20,7 +21,7 @@ interface CriterionOption {
 
 @Component({
   selector: 'app-search-livre',
-  imports: [CommonModule, FormsModule, DatePipe],
+  imports: [CommonModule, FormsModule, DatePipe, RouterLink],
   templateUrl: './search-livre.html',
   styleUrl: './search-livre.css',
 })

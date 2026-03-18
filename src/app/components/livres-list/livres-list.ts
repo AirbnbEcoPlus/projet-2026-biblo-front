@@ -2,11 +2,12 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ApiService } from '../../services/api-service';
 import { Livre } from '../../models/livre';
 import { DatePipe } from '@angular/common';
+import { RouterLink } from "@angular/router";
 
 
 @Component({
   selector: 'app-livres-list',
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink],
   templateUrl: './livres-list.html',
   styleUrl: './livres-list.css',
 })

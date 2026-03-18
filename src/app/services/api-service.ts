@@ -35,6 +35,10 @@ export class ApiService {
     return this.http.get<any>(`${this.apiUrl}/livres`, { params: criteres });
   }
 
+  getLivreById(id: string | number): Observable<Livre> {
+    return this.http.get<Livre>(`${this.apiUrl}/livres/${id}`);
+  }
+
   createArticle(article: any): Observable<Article> {
     return this.http.post<Article>(`${this.apiUrl}/articles`, article);
   }
