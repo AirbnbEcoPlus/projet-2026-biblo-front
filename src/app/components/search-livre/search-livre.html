@@ -50,7 +50,7 @@
 		</div>
 
 		<div class="d-flex gap-2 mt-3">
-			<button class="btn btn-primary" type="button" (click)="search()" [disabled]="loading()">
+			<button class="btn btn-primary" type="button" (click)="search(1)" [disabled]="loading()">
 				Rechercher
 			</button>
 			<button class="btn btn-outline-secondary" type="button" (click)="clearAll()" [disabled]="loading()">
@@ -102,6 +102,28 @@
 						}
 					</tbody>
 				</table>
+			</div>
+			<div class="d-flex justify-content-between align-items-center mt-3 p-2 bg-light border-top">
+				<button
+					class="btn btn-outline-primary btn-sm"
+					[disabled]="!hasPreviousPage() || loading()"
+					(click)="search(currentPage() - 1)"
+				>
+					&laquo; Précédent
+				</button>
+
+				<span class="text-muted">
+					Page <strong>{{ currentPage() }}</strong> / <strong>{{ totalPages() }}</strong>
+					<small>(Total : {{ totalItems() }} livres)</small>
+				</span>
+
+				<button
+					class="btn btn-outline-primary btn-sm"
+					[disabled]="!hasNextPage() || loading()"
+					(click)="search(currentPage() + 1)"
+				>
+					Suivant &raquo;
+				</button>
 			</div>
 		}
 	</div>
