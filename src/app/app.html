@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary app-navbar">
+<nav class="navbar navbar-expand-lg navbar-light bg-white app-navbar">
   <div class="container py-1">
     <a class="navbar-brand brand" routerLink="/" (click)="closeMobileMenu()">
       <span class="brand-badge" aria-hidden="true">LM</span>
@@ -33,9 +33,9 @@
               <span class="badge rounded-pill text-bg-warning">Admin</span>
             }
           </div>
-          <button type="button" class="btn btn-sm btn-light logout-btn" (click)="logout()">Deconnexion</button>
+          <button type="button" class="btn btn-sm btn-outline-dark logout-btn" (click)="logout()">Deconnexion</button>
         } @else {
-          <a class="btn btn-sm btn-light login-btn" routerLink="/login" routerLinkActive="active" (click)="closeMobileMenu()">Connexion</a>
+          <a class="btn btn-sm btn-outline-dark login-btn" routerLink="/login" routerLinkActive="active" (click)="closeMobileMenu()">Connexion</a>
         }
       </div>
     </div>
