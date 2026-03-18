@@ -20,6 +20,9 @@ export class AutheursList implements OnInit, OnDestroy {
   errorMessage = signal('');
   expandedAuteurId = signal<number | null>(null);
 
+  currentPage = signal(1);
+  totalItems = signal(0);
+
   ngOnInit() {
     console.log('AutheursList component initialized');
     this.loadAuteurs();
@@ -34,13 +37,20 @@ export class AutheursList implements OnInit, OnDestroy {
     console.log('Loading auteurs...');
     this.loading.set(true);
     this.errorMessage.set('');
-    this.apiService.getAuteurs()
+    this.apiService.getAuteurs(this.currentPage())
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-          console.log('Auteurs reçus:', data);
-          this.auteurs.set(data);
-          this.loading.set(false);
+          console.log('DATA REÇUE:', data);
+          const auteursTraites = data.map((a: any) => ({
+          ...a,
+          livres: a.livres || [] 
+        }));
+
+        this.auteurs.set(auteursTraites);
+        const total = data['hydra:totalItems'] ?? data.total ?? data.length ?? 0;
+        this.totalItems.set(total);
+        this.loading.set(false);
         },
         error: (err) => {
           console.error('Erreur lors du chargement des auteurs:', err);
@@ -51,6 +61,20 @@ export class AutheursList implements OnInit, OnDestroy {
           console.log('Requête auteurs complétée');
         }
       });
+  }
+
+  nextPage() {
+    if (this.auteurs().length === 10) { 
+    this.currentPage.update(p => p + 1);
+    this.loadAuteurs();
+  }
+  }
+
+  prevPage() {
+    if (this.currentPage() > 1) {
+      this.currentPage.update(p => p - 1);
+      this.loadAuteurs();
+    }
   }
 
   toggleAuteur(auteurId: number) {

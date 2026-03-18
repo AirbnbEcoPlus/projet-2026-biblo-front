@@ -43,8 +43,8 @@ export class ApiService {
     return this.http.post<Article>(`${this.apiUrl}/articles`, article);
   }
 
-  getAuteurs(): Observable<Auteur[]> {
-    return this.http.get<Auteur[]>(`${this.apiUrl}/auteurs`);
+  getAuteurs(page: number = 1): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/auteurs?page=${page}`);
   }
 
   getAuteur(id: number): Observable<Auteur> {

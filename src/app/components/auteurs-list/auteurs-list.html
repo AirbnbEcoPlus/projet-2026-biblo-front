@@ -1,55 +1,74 @@
-<div>
-  <h2>Liste des Auteurs</h2>
+<div class="container mt-4">
+  <div class="card shadow-sm p-3">
+    <h2>Liste des Auteurs</h2>
 
-  <div *ngIf="loading()" class="loading">
-    Chargement en cours...
-  </div>
+    @if (loading()) {
+      <div class="loading">Chargement en cours...</div>
+    }
 
-  <div *ngIf="errorMessage()" class="error-message">
-    {{ errorMessage() }}
-  </div>
+    @if (errorMessage()) {
+      <div class="error-message">{{ errorMessage() }}</div>
+    }
 
-  <div *ngIf="!loading() && auteurs().length === 0" class="no-data">
-    Aucun auteur trouvé
-  </div>
+    @if (!loading() && auteurs().length > 0) {
+      <div class="auteurs-container">
+        @for (auteur of auteurs(); track auteur.id) {
+          <div class="auteur-card">
+            <div class="auteur-header">
+              <h3>{{ auteur.prenom }} {{ auteur.nom }}</h3>
+              <p *ngIf="auteur.dateNaissance" class="date-birth">
+                {{ auteur.dateNaissance | date: 'dd/MM/yyyy' }}
+              </p>
+            </div>
 
-  <div *ngIf="!loading() && auteurs().length > 0" class="auteurs-container">
-    <div *ngFor="let auteur of auteurs()" class="auteur-card">
-      <div class="auteur-header">
-        <h3>{{ auteur.prenom }} {{ auteur.nom }}</h3>
-        <p *ngIf="auteur.dateNaissance" class="date-birth">
-          {{ auteur.dateNaissance | date: 'dd/MM/yyyy' }}
-        </p>
-      </div>
+            <div class="auteur-livres">
+              <button class="dropdown-btn" (click)="toggleAuteur(auteur.id)" [class.open]="expandedAuteurId() === auteur.id">
+                📚 {{ auteur.livres?.length || 0 }} livre(s)
+                <span class="arrow">▼</span>
+              </button>
 
-      <div class="auteur-livres">
-        <button 
-          class="dropdown-btn"
-          (click)="toggleAuteur(auteur.id)"
-          [class.open]="expandedAuteurId() === auteur.id">
-          📚 {{ auteur.livres.length || 0 }} livre(s)
-          <span class="arrow">▼</span>
-        </button>
-
-        <div 
-          *ngIf="expandedAuteurId() === auteur.id && auteur.livres && auteur.livres.length > 0" 
-          class="livres-list">
-          <div *ngFor="let livre of auteur.livres" class="livre-item">
-            <div class="livre-icon">📖</div>
-            <div class="livre-details">
-              <p class="livre-titre">{{ livre.titre }}</p>
-              <p class="livre-date">{{ livre.dateSortie | date: 'yyyy' }}</p>
-              <p *ngIf="livre.langue" class="livre-langue">{{ livre.langue }}</p>
+              @if (expandedAuteurId() === auteur.id) {
+                <div class="livres-list">
+                  @for (livre of auteur.livres || []; track $index) {
+                    <div class="livre-item">
+                      <div class="livre-icon">📖</div>
+                      <div class="livre-details">
+                        <p class="livre-titre">{{ livre.titre }}</p>
+                        <p class="livre-date">{{ livre.dateSortie | date: 'yyyy' }}</p>
+                      </div>
+                    </div>
+                  } @empty {
+                    <div class="no-livres">Aucun livre associé</div>
+                  }
+                </div>
+              }
             </div>
           </div>
-        </div>
-
-        <div 
-          *ngIf="expandedAuteurId() === auteur.id && (!auteur.livres || auteur.livres.length === 0)" 
-          class="no-livres">
-          Aucun livre associé
-        </div>
+        }
       </div>
-    </div>
+
+      <div class="d-flex justify-content-between align-items-center mt-4 p-3 bg-light border-top w-100">
+        <button 
+          class="btn btn-outline-secondary btn-sm px-3" 
+          [disabled]="currentPage() === 1 || loading()"
+          (click)="prevPage()">
+          &laquo; Précédent
+        </button>
+
+        <span class="text-muted">
+          Page <strong>{{ currentPage() }}</strong> 
+          <small>(Total : {{ totalItems() }} auteurs)</small>
+        </span>
+
+        <button 
+        class="btn btn-outline-secondary btn-sm px-3" 
+        [disabled]="auteurs().length < 10 || loading()" 
+        (click)="nextPage()">
+        Suivant »
+      </button>
+      </div>
+    } @else if (!loading()) {
+      <div class="no-data">Aucun auteur trouvé</div>
+    }
   </div>
 </div>
