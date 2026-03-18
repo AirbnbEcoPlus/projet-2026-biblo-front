@@ -35,4 +35,26 @@ export class ShowLivre implements OnInit {
   back() {
     this.location.back();
   }
+
+  formatAuteurs(auteurs: Livre['auteurs']): string {
+    if (!auteurs?.length) {
+      return 'Auteur inconnu';
+    }
+
+    return auteurs
+      .map((auteur) => `${auteur.prenom} ${auteur.nom}`.trim())
+      .filter(Boolean)
+      .join(', ');
+  }
+
+  formatCategories(categories: Livre['categories']): string {
+    if (!categories?.length) {
+      return 'Aucune catégorie';
+    }
+
+    return categories
+      .map((categorie) => categorie.nom || categorie.libelle || '')
+      .filter(Boolean)
+      .join(', ');
+  }
 }

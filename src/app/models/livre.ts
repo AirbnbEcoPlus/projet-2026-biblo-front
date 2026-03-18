@@ -1,4 +1,5 @@
 import { Categorie } from './categorie';
+import { Auteur } from './auteur';
 
 export interface Livre {
   id: number;
@@ -7,6 +8,6 @@ export interface Livre {
   langue?: string | null;
   photoCouverture?: string | null;
   emprunts?: unknown[];
-  auteurs?: unknown[];
+  auteurs?: Auteur[];
   categories?: Categorie[];
 }

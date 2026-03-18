@@ -12,12 +12,12 @@
       </div>
       <div class="col-md-8">
         <h1 class="display-4">{{ l.titre }}</h1>
-        <p class="lead text-muted">Par {{ l.auteurs || 'Auteur inconnu' }}</p>
+        <p class="lead text-muted">Par {{ formatAuteurs(l.auteurs) }}</p>
         <hr>
         <ul class="list-group list-group-flush">
           <li class="list-group-item"><strong>Langue :</strong> {{ l.langue | uppercase }}</li>
           <li class="list-group-item"><strong>Date de sortie :</strong> {{ l.dateSortie | date:'dd/MM/yyyy' }}</li>
-          <li class="list-group-item"><strong>Catégories :</strong> {{ l.categories }}</li>
+          <li class="list-group-item"><strong>Catégories :</strong> {{ formatCategories(l.categories) }}</li>
         </ul>
       </div>
     </div>
