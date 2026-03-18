@@ -58,4 +58,8 @@ export class ApiService {
   createReservation(livreId: number): Observable<unknown> {
     return this.http.post(`${this.apiUrl}/reservations`, { livre: livreId });
   }
+
+  deleteReservation(reservationId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/reservations/${reservationId}`);
+  }
 }

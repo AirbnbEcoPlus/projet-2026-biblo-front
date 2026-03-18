@@ -98,6 +98,43 @@ h1 {
   font-size: 13px;
 }
 
+.reservation-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.delete-reservation-btn {
+  border: 1px solid #f2c8d0;
+  background: #fff1f4;
+  color: #8d2237;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.delete-reservation-btn svg {
+  fill: currentColor;
+}
+
+.delete-reservation-btn:hover:not(:disabled) {
+  background: #ffdfe6;
+  transform: translateY(-1px);
+}
+
+.delete-reservation-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
+
 .empty {
   color: #556273;
 }

@@ -2,7 +2,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { Component, effect, inject, signal } from '@angular/core';
 import { ApiService } from '../../services/api-service';
 import { AuthService } from '../../services/auth-service';
-import { Adherent } from '../../models/adherent';
+import { Adherent, Reservation } from '../../models/adherent';
 
 @Component({
   selector: 'app-mon-compte',
@@ -17,6 +17,7 @@ export class MonCompte {
   adherent = signal<Adherent | null>(null);
   loading = signal(true);
   errorMessage = signal('');
+  deletingReservationId = signal<number | null>(null);
 
   constructor() {
     effect(() => {
@@ -59,5 +60,40 @@ export class MonCompte {
     }
 
     return null;
+  }
+
+  deleteReservation(reservation: Reservation) {
+    if (this.deletingReservationId() !== null) {
+      return;
+    }
+
+    const confirmed = window.confirm('Supprimer cette reservation ?');
+    if (!confirmed) {
+      return;
+    }
+
+    this.errorMessage.set('');
+    this.deletingReservationId.set(reservation.id);
+
+    this.apiService.deleteReservation(reservation.id).subscribe({
+      next: () => {
+        this.adherent.update((profile) => {
+          if (!profile) {
+            return profile;
+          }
+
+          return {
+            ...profile,
+            reservations: profile.reservations.filter((item) => item.id !== reservation.id),
+          };
+        });
+
+        this.deletingReservationId.set(null);
+      },
+      error: (err) => {
+        this.errorMessage.set(err?.error?.error || 'Erreur lors de la suppression de la reservation.');
+        this.deletingReservationId.set(null);
+      },
+    });
   }
 }
