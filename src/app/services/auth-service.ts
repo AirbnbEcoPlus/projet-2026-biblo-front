@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private apiUrl = 'https://127.0.0.1:8000/api';
+  private apiUrl = 'http://127.0.0.1:8000/api';
 
   isLoggedIn = signal(false);
   userEmail = signal('');

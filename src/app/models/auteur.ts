@@ -11,5 +11,5 @@ export interface Auteur {
   nom: string;
   prenom: string;
   dateNaissance: string | null;
-  livres: LivreAuteur[];
+  livres?: LivreAuteur[];
 }
